@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>星火 · 1927—1937 ｜ 全 15 章 · 两条线四个结局（原型）</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ========== 开场屏（版式参照图一：大标题 / 副标题 / 说明 / 发光主按钮） ========== -->
+  <section class="screen screen-start is-active" id="screen-start">
+    <div class="backdrop" aria-hidden="true"></div>
+    <div class="start-inner">
+      <h1 class="title">星火</h1>
+      <p class="subtitle">一九二七 — 一九三七</p>
+      <p class="chapter-line" id="start-chapter">第一段 · 土牢里的一枚徽章</p>
+      <p class="kicker">文字冒险 × 视觉小说　｜　原型：全 15 章 + 两个结算层</p>
+
+      <!-- 进入时状态（提示词包第六节：身份 / 地点 / 时间 / 物品） -->
+      <dl class="start-meta" id="start-meta"></dl>
+
+      <button class="primary-btn" id="btn-start" type="button">开始本章</button>
+
+      <ul class="hints">
+        <li>点击画面 / 空格　推进下一句</li>
+        <li>选项弹出时　点按钮，或按 1 / 2 / 3 / 4</li>
+        <li>状态栏固定显示：身份 · 地点 · 时间 · 物品</li>
+        <li>本次原型包含：全 15 章（A — O）；第五段末、第八段末各一次真分叉；四条通关路线</li>
+      </ul>
+    </div>
+    <div class="corner-badge">原型 · 全 15 章</div>
+  </section>
+
+  <!-- ========== 游戏屏（B：场景画面 + 半透明对话框 ；A：关键节点弹出选项） ========== -->
+  <section class="screen screen-game" id="screen-game">
+    <header id="topbar">
+      <div class="topbar-left">
+        <span class="chapter-title" id="chapter-title">—</span>
+        <span class="node-label" id="node-label"></span>
+      </div>
+      <dl id="statusbar">
+        <div class="stat"><dt>身份</dt><dd id="stat-identity">—</dd></div>
+        <div class="stat"><dt>地点</dt><dd id="stat-location">—</dd></div>
+        <div class="stat"><dt>时间</dt><dd id="stat-time">—</dd></div>
+        <div class="stat stat-items"><dt>物品</dt><dd class="items" id="stat-items"></dd></div>
+      </dl>
+    </header>
+
+    <div id="stage">
+      <!-- 场景图槽位：一章一图（R1）。没有图就留空白，不显示提示词文字 -->
+      <div class="stage-art" id="stage-art">
+        <img id="scene-image" alt="场景图" hidden>
+        <div class="stage-blank" id="stage-blank">
+          <span class="blank-tag" id="blank-tag">IMG-01　待插入 img01.jpg</span>
+        </div>
+      </div>
+
+      <!-- 立绘层：15 章均无立绘，为后续章节预留（不放任何东西） -->
+      <div class="portrait-layer" id="portrait-layer" aria-hidden="true"></div>
+
+      <!-- 章节过渡卡：飞入 → 停留 → 飞出 -->
+      <div class="chapter-card" id="chapter-card" aria-hidden="true">
+        <span class="cc-rule"></span>
+        <h2 class="cc-title" id="cc-title"></h2>
+        <span class="cc-sub" id="cc-sub"></span>
+        <span class="cc-rule"></span>
+      </div>
+
+      <div class="dialog-layer" id="dialog-layer">
+        <div class="choice-layer" id="choice-layer"></div>
+
+        <div class="dialog-box" id="dialog-box">
+          <div class="dialog-head">
+            <span class="speaker" id="speaker">旁白</span>
+            <span class="line-progress" id="line-progress"></span>
+          </div>
+          <p class="dialog-text" id="dialog-text"></p>
+        </div>
+
+        <div class="advance-layer" id="advance-layer"></div>
+      </div>
+    </div>
+
+    <footer id="bottombar">
+      <span class="hint-text" id="hint-text">点击画面 / 空格　推进</span>
+      <div class="bottombar-right">
+        <span class="flags-note">内部状态只写控制台，不上屏</span>
+        <button class="ghost-btn" id="btn-restart" type="button">重新开始</button>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ========== 兜底占位屏（正常流程走不到，保证任何情况下都没有死路 R2） ========== -->
+  <section class="screen screen-placeholder" id="screen-placeholder">
+    <div class="placeholder-inner">
+      <p class="kicker" id="ph-kicker">待接入</p>
+      <h2 class="ph-title" id="ph-title">下一段待接入</h2>
+      <p class="ph-route" id="ph-route"></p>
+
+      <div class="next-card">
+        <div class="next-art"><span id="next-art">—</span></div>
+        <div class="next-body">
+          <h3 id="next-title">下一段</h3>
+          <p id="next-note"></p>
+        </div>
+      </div>
+
+      <div class="ph-actions">
+        <button class="primary-btn" id="btn-again" type="button">从第一段重玩</button>
+        <button class="ghost-btn" id="btn-home" type="button">回到开场</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 结算层（提示词包第十二章；底图复用 IMG-14 / IMG-15） ========== -->
+  <section class="screen screen-end" id="screen-end">
+    <div class="end-inner">
+      <p class="kicker" id="end-kicker">这一路 · 主力线</p>
+      <h2 class="ph-title" id="end-title">一九二七 — 一九三七</h2>
+      <p class="ph-route" id="end-sub"></p>
+
+      <h3 class="block-title">时间轴</h3>
+      <ol class="timeline" id="end-timeline"></ol>
+
+      <h3 class="block-title">纪念物</h3>
+      <div class="memento-row" id="end-mementos"></div>
+
+      <div class="ph-actions" id="end-actions"></div>
+    </div>
+
+    <!-- 面板：查看本局走过的路 / 查看完整剧本 -->
+    <div class="panel" id="end-panel">
+      <div class="panel-head">
+        <span class="panel-title" id="end-panel-title"></span>
+        <button class="ghost-btn" id="end-panel-close" type="button">关闭</button>
+      </div>
+      <div class="panel-body" id="end-panel-body"></div>
+    </div>
+  </section>
+
+</div>
+<script src="main.js"></script>
+</body>
+</html>

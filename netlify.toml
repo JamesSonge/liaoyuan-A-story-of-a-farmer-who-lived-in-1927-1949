@@ -1,0 +1,10 @@
+# Netlify 配置：纯静态站点，不需要构建
+# 直接把本目录当发布目录即可；拖拽部署时这份配置可以忽略。
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
